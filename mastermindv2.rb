@@ -19,3 +19,51 @@ class Player
   def initialize(name)
   end
 end
+
+class Turn
+  @count=0
+  class << self
+    attr_accessor :count
+  end
+
+  def initialize
+    self.class.count += 1
+  end
+end
+
+
+
+class Feedback
+end
+
+class Game
+  attr_reader :code, :player, :guess
+  def initialize(player, code = CodePicker.new, guess = gets.chomp)
+    @guess = guess.split
+    @code = code.pick_code
+  end
+
+  def play
+    turn = Turn.new
+    while Turn.count < 13
+      puts Turn.count
+      puts "Please make your guess"
+      guess = Guess.new
+
+      puts guess.answer_check
+      Turn.count += 1
+    end
+  end
+
+  def answer_check
+    if @guess == Game.code
+      puts "Winner Winner Chicken Dinner!"
+    else
+      "Try Again"
+    end
+  end
+
+end
+
+game = Game.new("Steven")
+puts game.play
