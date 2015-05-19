@@ -1,4 +1,5 @@
-class CodePicker
+
+class Code
   attr_reader :code
 
   def initialize(code = [])
@@ -11,59 +12,74 @@ class CodePicker
       end
     @code = code
   end
-end
 
 
-class Player
-  attr_reader :name
-  def initialize(name)
+
+class Game
+  attr_reader :new_code
+
+  def initialize(new_code = Code.new.pick_code )
+    @new_code = new_code
+  end
+
+  def play
+  puts @new_code
+  turn = Turn.new
+    while (Turn.count <= 12)
+      if (@new_code.check_code(turn.round) != true)
+    turn = Turn.new
+  else
+    puts "You Win!"
+
+    end
   end
 end
 
 class Turn
-  @count=0
+  @count = 0
   class << self
-    attr_accessor :count
-  end
-
-  def initialize
+  attr_accessor :count, :guess
+end
+  def initialize()
     self.class.count += 1
   end
-end
 
-
-
-class Feedback
-end
-
-class Game
-  attr_reader :code, :player, :guess
-  def initialize(player, code = CodePicker.new, guess = gets.chomp)
-    @guess = guess.split
-    @code = code.pick_code
-  end
-
-  def play
-    turn = Turn.new
-    while Turn.count < 13
-      puts Turn.count
-      puts "Please make your guess"
-      guess = Guess.new
-
-      puts guess.answer_check
-      Turn.count += 1
+  def round
+    puts "Please enter a guess"
+    @guess = Player.new.guess
     end
-  end
+end
+end
 
-  def answer_check
-    if @guess == Game.code
-      puts "Winner Winner Chicken Dinner!"
+
+
+
+
+  def check_code(guess)
+    @guess = guess
+    if @guess == @code
+      return true
     else
-      "Try Again"
+      return false
     end
+  end
+end
+
+
+
+
+
+
+
+class Player
+  attr_reader :guess
+  def guess(guess = gets.chomp)
+    @guess = guess.split
   end
 
 end
 
-game = Game.new("Steven")
-puts game.play
+
+
+game = Game.new
+puts game
