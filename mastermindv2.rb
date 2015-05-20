@@ -76,11 +76,13 @@ end
       if @guess == @code
         return true
       else
-          
+
         return false
       end
 
     end
+
+
   end
 
 
@@ -90,6 +92,7 @@ end
 
 class Player
   attr_accessor :guess
+
   def guess(guess = gets.chomp)
     @guess = guess.split
   end
