@@ -27,10 +27,17 @@ class Game
   def play
   puts @new_code
   turn = Turn.new
-    if (@new_code.check_code(turn.round, @new_code) != true)
-    puts "debug"
+  while (Turn.count <= 12)
+    if (@new_code.check_code(turn.round, @new_code) == true)
+    puts "You Win!"
+    break
+  elsif Turn.count == 12
+    puts "you lose"
+    break
   else
-   puts "debug2"
+   puts "Guess again"
+   turn = Turn.new
+ end
     end
   end
 end
@@ -69,8 +76,10 @@ end
       if @guess == @code
         return true
       else
+          
         return false
       end
+
     end
   end
 
