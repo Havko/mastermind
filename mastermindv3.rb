@@ -47,8 +47,8 @@ class Game
     elsif @player.role == "codemaker"
       puts "Please enter your code now"
       @player_code = gets.chomp.split
-      @ai_guess = Code.new.pick_code
-      puts @ai_guess.check_code(@aiguess, @new_code)
+      ai = Ai.new
+      puts ai.ai_guess.check_code(ai.ai_guess, @new_code)
   end
 end
 end
@@ -138,7 +138,14 @@ class Player
 
 end
 
+class Ai
+  attr_accessor :ai_guess
+  def initialize(ai_guess = Code.new.pick_code)
+    @ai_guess = ai_guess
+  end
+end
 
-steven = Player.new("Steven", "codebreaker")
+
+steven = Player.new("Steven", "codemaker")
 game = Game.new(steven)
 puts game.play
